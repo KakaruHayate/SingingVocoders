@@ -19,6 +19,8 @@ from torchmetrics import Metric, MeanMetric
 
 import utils
 from models.nsf_HiFigan.models import Generator, AttrDict, MultiScaleDiscriminator, MultiPeriodDiscriminator
+from models.nsf_HiFigan.models import AttrDict, MultiScaleDiscriminator, MultiPeriodDiscriminator
+from models.nsf_HiFigan.test import WNGANGenerator
 from modules.loss.HiFiloss import HiFiloss
 from training.base_task_gan import GanBaseTask
 # from utils.indexed_datasets import IndexedDataset
@@ -251,7 +253,10 @@ class nsf_HiFigan(GanBaseTask):
         if 'mini_nsf' not in cfg.keys():
             cfg.update({'mini_nsf': False})
         h = AttrDict(cfg)
-        self.generator = Generator(h)
+        if h.train_wavenetgan:
+            self.generator = WNGANGenerator(h)
+        else:
+            self.generator = Generator(h)
         self.discriminator = nn.ModuleDict({'msd':MultiScaleDiscriminator(), 'mpd':MultiPeriodDiscriminator(periods=cfg['discriminator_periods'])})
 
     def build_losses_and_metrics(self):

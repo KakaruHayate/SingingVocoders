@@ -73,7 +73,16 @@ model_args:
   resblock_dilation_sizes: [ [ 1,3,5 ], [ 1,3,5 ], [ 1,3,5 ] ]
   discriminator_periods: [ 3, 5, 7, 11, 17, 23, 37 ]
   resblock: "1"
-
+  
+  #WNGAN
+  train_wavenetgan: false
+  res_layers_channel: 64
+  model_hop_size: 512
+  wngan_upsample_kernel_sizes: [17, 17, 5, 5, 5]
+  res_blocks_num: 3
+  res_layers_num: 10
+  res_layers_kernel_size: 5
+  
 # training
 
 task_cls: training.nsf_HiFigan_task.nsf_HiFigan
