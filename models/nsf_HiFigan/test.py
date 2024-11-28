@@ -207,7 +207,7 @@ class WaveNetLayer(torch.nn.Module):
 			res = x1
 		x1 = self.conv1(x1)
 		x2a = self.conv2(x2) + x1
-		x2b = self.conv2(x2) + x1
+		x2b = self.conv3(x2) + x1
 		x = F.tanh(x2a) * F.sigmoid(x2b)
 		
 		return x + res
